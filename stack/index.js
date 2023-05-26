@@ -29,3 +29,11 @@ function Stack() {
     console.log(items.toString())
   }
 }
+
+const pilha = new Stack()
+
+pilha.push(2)
+pilha.push(4)
+pilha.push(6)
+
+pilha.print()
