@@ -30,6 +30,7 @@ function PriorityQueue() {
     for (var i = 0; i < items.length; i++) {
       console.log(items[i].element + ' '+ items[i].priority)
     }
+    return items
   }
 }
 
@@ -39,4 +40,6 @@ pQueue.enqueue('Carlos', 2)
 pQueue.enqueue('Ana', 1)
 pQueue.enqueue('Lucas', 1)
 
-pQueue.print()
+const printedItems = pQueue.print()
+
+document.body.innerHTML = printedItems.map((item) => `${item.element} ${item.priority}`)
