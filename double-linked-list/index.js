@@ -1,4 +1,4 @@
-function doubleLinkedList() {
+function DoubleLinkedList() {
 
   var Node = function(element) {
     this.element = element
@@ -16,6 +16,7 @@ function doubleLinkedList() {
   
     if (head === null) {
       head = node
+      tail = node
     } else {
       current = head
 
@@ -24,6 +25,7 @@ function doubleLinkedList() {
       }
 
       current.next = node
+      tail = node
     }
     length++
   }
@@ -54,7 +56,7 @@ function doubleLinkedList() {
           previous = current
           current = current.next
         }
-        node.nex = current
+        node.next = current
         previous.next = node
         current.prev = node
         node.prev = previous
@@ -67,7 +69,35 @@ function doubleLinkedList() {
   }
 
   this.removeAt = function(position)  {
-    
+    if (position > -1 && position < length) {
+      var current = head
+      var previous
+      var index = 0
+
+      if (position === 0) {
+        head = current.next
+        if (length === 1) {
+          tail = null
+        } else {
+          head.prev = null
+        }
+      } else if (position === length - 1) {
+        current = tail
+        tail = current.prev
+        tail.next = null
+      } else {
+        while (index++ < position) {
+          previous = current
+          current = current.next
+        }
+        previous.next = current.next
+        current.next.prev = previous
+      }
+      length--
+      return current.element
+    } else {
+      return null
+    }
   }
 
   this.remove = function(element)  {
@@ -118,24 +148,23 @@ function doubleLinkedList() {
   }
 }
 
-const doublelinkedList = new doubleLinkedList()
+const doublelinkedList = new DoubleLinkedList()
 
 doublelinkedList.append('João')
 doublelinkedList.append('José')
 doublelinkedList.append('Maria')
 
-console.log('isEmpty', doublelinkedList.isEmpty())
-console.log('get Head', doublelinkedList.getHead())
-console.log('size', doublelinkedList.size())
-
 
 doublelinkedList.insert(0,'Paulo')
-console.log('get Head', doublelinkedList.getHead())
+doublelinkedList.insert(4,'André')
+doublelinkedList.insert(2,'Pleterson')
 
-doublelinkedList.remove('Maria')
+
+const removed = doublelinkedList.removeAt(2)
 const printed = doublelinkedList.print()
 
 document.body.innerHTML = `
 <h3>${printed}</h3>
+<h3>removed: ${removed}</h3>
 <h3>index of Paulo ${doublelinkedList.indexOf('Paulo')}</h3>
 `
